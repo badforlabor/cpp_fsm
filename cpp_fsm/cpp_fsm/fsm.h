@@ -38,6 +38,10 @@ namespace fsm
 	public:
 		StateMachine(void* Owner);
 		~StateMachine();
+	private:
+		// ²»ÔÊÐí¿½±´
+		StateMachine(const StateMachine& sm) {}
+		StateMachine& operator=(const StateMachine& sm) {}
 	public:
 		template<class LeftState, class RightState>
 		void AddState()

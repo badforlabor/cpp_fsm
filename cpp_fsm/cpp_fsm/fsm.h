@@ -5,6 +5,12 @@
 	一个简单的状态机                                                     
 	用ID标识一个状态
 	状态跳转过程，必须先注册。
+
+	使用思路：
+		新建一个宿主类，就是正常你分状态处理的类。
+		新建一个StateMachine对象，传入宿主类指针，通过GetOwner<T>获取真正的速度类。StateMachine中，不建议存储信息，所有信息建议存储在宿主类中。
+		新建一个State，譬如class State1 : public State<EState1>。同样，不需要在State类中记录任何信息，所有信息都放在宿主类中。
+			State相当于逻辑处理组件。仅用来处理逻辑的。
 */
 /************************************************************************/
 
@@ -22,6 +28,16 @@ namespace fsm
 		virtual void Update(StateMachine& sm) {};
 		virtual int GetId() const = 0;
 	};
+
+	template<class T>
+	T* NewState()
+	{
+		return new T;
+	}
+	inline void DeleteState(BaseState* ptr)
+	{
+		delete ptr;
+	}
 
 	template<int StateId>
 	class State : public BaseState
@@ -52,12 +68,12 @@ namespace fsm
 			auto LeftIt = AllStateMap.find(LeftId);
 			if (LeftIt == AllStateMap.end())
 			{
-				AllStateMap[LeftId] = (new LeftState);
+				AllStateMap[LeftId] = NewState<LeftState>();
 			}
 			auto RightIt = AllStateMap.find(RightId);
 			if (RightIt == AllStateMap.end())
 			{
-				AllStateMap[RightId] = (new RightState);
+				AllStateMap[RightId] = NewState<RightState>();
 			}
 			TransferStateMap[std::make_pair(LeftId, RightId)] = AllStateMap[RightId];
 		}

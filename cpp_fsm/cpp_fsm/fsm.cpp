@@ -13,7 +13,7 @@ StateMachine::~StateMachine()
 	for (auto it = AllStateMap.begin(); it != AllStateMap.end(); it++)
 	{
 		BaseState* ptr = it->second;
-		delete ptr;
+		DeleteState(ptr);
 	}
 	AllStateMap.clear();
 	TransferStateMap.clear();

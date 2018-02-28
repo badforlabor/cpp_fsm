@@ -35,6 +35,7 @@ void StateMachine::Update()
 		if (it == TransferStateMap.end())
 		{
 			//assert(false);
+			OnSetNextStateFailed(CurrentState->GetId(), NextState);
 		}
 		else
 		{

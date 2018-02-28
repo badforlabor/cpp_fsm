@@ -23,6 +23,7 @@ namespace fsm
 	class BaseState
 	{
 	public:
+		virtual ~BaseState() {}
 		virtual void OnEnter(StateMachine& sm) {};
 		virtual void OnExit(StateMachine& sm) {};
 		virtual void Update(StateMachine& sm) {};
@@ -53,7 +54,8 @@ namespace fsm
 	{
 	public:
 		StateMachine(void* Owner);
-		~StateMachine();
+		virtual ~StateMachine();
+		virtual void OnSetNextStateFailed(int CurrentId, int NextId) {}
 	private:
 		// ²»ÔÊÐí¿½±´
 		StateMachine(const StateMachine& sm) {}
